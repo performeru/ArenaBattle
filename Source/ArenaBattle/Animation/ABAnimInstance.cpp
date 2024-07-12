@@ -7,9 +7,8 @@
 
 UABAnimInstance::UABAnimInstance()
 {
-	MoveingThreshould = 3.0f;
+	MovingThreshould = 3.0f;
 	JumpingThreshould = 100.0f;
-
 }
 
 void UABAnimInstance::NativeInitializeAnimation()
@@ -17,23 +16,21 @@ void UABAnimInstance::NativeInitializeAnimation()
 	Super::NativeInitializeAnimation();
 
 	Owner = Cast<ACharacter>(GetOwningActor());
-	if(Owner)
+	if (Owner)
 	{
 		Movement = Owner->GetCharacterMovement();
 	}
-
-
 }
 
-void UABAnimInstance::NativeUpdateAnimation(float DeltaSecond)
+void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	Super::NativeUpdateAnimation(DeltaSecond);
-	
-	if(Movement)
+	Super::NativeUpdateAnimation(DeltaSeconds);
+
+	if (Movement)
 	{
 		Velocity = Movement->Velocity;
 		GroundSpeed = Velocity.Size2D();
-		bIsIdle = GroundSpeed < MoveingThreshould;
+		bIsIdle = GroundSpeed < MovingThreshould;
 		bIsFalling = Movement->IsFalling();
 		bIsJumping = bIsFalling & (Velocity.Z > JumpingThreshould);
 	}
